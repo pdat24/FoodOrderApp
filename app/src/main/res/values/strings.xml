@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Food Shop</string>
+    <string name="image_desc">An image</string>
+    <string name="welcome">Welcome To Food Shop</string>
+    <string name="intro_text">Shared and delightful, for an easy and enjoyable food ordering experience</string>
+    <string name="signup"><u>Sign up</u></string>
+    <string name="login"><u>Login</u></string>
+</resources>
