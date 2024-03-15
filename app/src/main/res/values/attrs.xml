@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomSpinner">
+        <attr name="text" format="string" />
+        <attr name="iconStart" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="CategoryItem">
+        <attr name="label" format="string" />
+        <attr name="category_id" format="integer" />
+        <attr name="thumbnail" format="reference" />
+        <attr name="thumbnail_background" format="reference|color" />
+    </declare-styleable>
+</resources>

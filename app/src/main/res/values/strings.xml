@@ -1,8 +1,34 @@
 <resources>
     <string name="app_name">Food Shop</string>
+    <string name="google_auth_id_token">81268509123-nfn0ql7uafc7fqaqtflh71ml5hv1c4r2.apps.googleusercontent.com</string>
     <string name="image_desc">An image</string>
-    <string name="welcome">Welcome To Food Shop</string>
+    <string name="intro_welcome">Welcome To Food Shop</string>
     <string name="intro_text">Shared and delightful, for an easy and enjoyable food ordering experience</string>
-    <string name="signup"><u>Sign up</u></string>
-    <string name="login"><u>Login</u></string>
+    <string name="signup">Sign up</string>
+    <string name="login">Login</string>
+    <string name="food">Food</string>
+    <string name="app">App</string>
+    <string name="email">Email Address</string>
+    <string name="password">Password</string>
+    <string name="or">Or</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="welcome">Welcome</string>
+    <string name="search_food">Search food</string>
+    <string name="time">Time</string>
+    <string name="price">Price</string>
+    <string name="today_best_food">Today\'s best Foods</string>
+    <string name="choose_category">Choose Category</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="total_price">Total Price</string>
+    <string name="quality">Quality</string>
+    <string name="detail">Detail</string>
+    <string name="cart">Cart</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="delivery">Delivery</string>
+    <string name="total">Total</string>
+    <string name="place_order">Place Order</string>
+    <string name="empty_cart">The cart is empty</string>
 </resources>

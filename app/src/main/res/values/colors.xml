@@ -3,4 +3,17 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="intro_status_bar">#FEE3B4</color>
+    <color name="text">#333</color>
+    <color name="white_bg">#FDF6FE</color>
+    <color name="primary">#F65564</color>
+    <color name="light_grey">#e7e5e7</color>
+    <color name="light_grey_2">#CFCFCF</color>
+    <color name="pizza">#9c88e2</color>
+    <color name="burger">#74bbcf</color>
+    <color name="chicken">#f69689</color>
+    <color name="sushi">#5ac492</color>
+    <color name="meat">#dd639d</color>
+    <color name="hotdog">#89bc99</color>
+    <color name="drink">#c965cc</color>
+    <color name="more">#969dcd</color>
 </resources>
