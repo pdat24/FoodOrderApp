@@ -2,9 +2,11 @@ package com.firstapp.foodorderapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.MutableLiveData;
@@ -89,18 +91,19 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    public void signOut(View view) {
-        new MaterialAlertDialogBuilder(this)
-            .setTitle("Sign Out")
-            .setMessage("Are you sure you want to sign out?")
-            .setPositiveButton("Confirm", (dialog, which) -> {
-                firebaseAuth.signOut();
-                Functions.clearCacheUID(MainActivity.this);
-                startActivity(new Intent(MainActivity.this, IntroActivity.class));
-                finish();
-            })
-            .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
-            .create().show();
+    public void signOut(View v) {
+        View view = LayoutInflater.from(this).inflate(
+            R.layout.view_sign_out_dialog, null, false);
+        AlertDialog dialog = new MaterialAlertDialogBuilder(this)
+            .setView(view).create();
+        view.findViewById(R.id.btnCancel).setOnClickListener(btn -> dialog.dismiss());
+        view.findViewById(R.id.btnConfirm).setOnClickListener(btn -> {
+            firebaseAuth.signOut();
+            Functions.clearCacheUID(MainActivity.this);
+            startActivity(new Intent(MainActivity.this, IntroActivity.class));
+            finish();
+        });
+        dialog.show();
     }
 
     public void toSearchActivity(View v) {
