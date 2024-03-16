@@ -2,7 +2,6 @@ package com.firstapp.foodorderapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -18,7 +17,7 @@ import com.firstapp.foodorderapp.api.FoodApi;
 import com.firstapp.foodorderapp.api.UserApi;
 import com.firstapp.foodorderapp.model.Food;
 import com.firstapp.foodorderapp.utils.Functions;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
@@ -35,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     FragmentContainerView loadingFrag;
     RecyclerView rcvBestFood;
     View basketButton;
-    TextInputEditText searchInput;
     View bestFoodPlaceholder;
     @Inject
     FirebaseAuth firebaseAuth;
@@ -57,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         // get views
         basketButton = findViewById(R.id.btnBasket);
         loadingFrag = findViewById(R.id.fragLoading);
-        searchInput = findViewById(R.id.ipSearch);
         rcvBestFood = findViewById(R.id.rcvTodayBestFood);
         bestFoodPlaceholder = findViewById(R.id.bestFoodPlaceHolder);
 
@@ -70,13 +67,9 @@ public class MainActivity extends AppCompatActivity {
         basketButton.setOnClickListener(
             v -> startActivity(new Intent(this, CartActivity.class))
         );
-        searchInput.setOnClickListener(v -> {
-            searchInput.setGravity(Gravity.START);
-        });
         bestFoodIsLoaded.observe(this, isLoaded -> {
-            if (isLoaded) {
+            if (isLoaded)
                 bestFoodPlaceholder.setVisibility(View.GONE);
-            }
         });
     }
 
@@ -97,10 +90,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signOut(View view) {
-        firebaseAuth.signOut();
-        Functions.clearCacheUID(this);
-        startActivity(new Intent(this, IntroActivity.class));
-        finish();
+        new MaterialAlertDialogBuilder(this)
+            .setTitle("Sign Out")
+            .setMessage("Are you sure you want to sign out?")
+            .setPositiveButton("Confirm", (dialog, which) -> {
+                firebaseAuth.signOut();
+                Functions.clearCacheUID(MainActivity.this);
+                startActivity(new Intent(MainActivity.this, IntroActivity.class));
+                finish();
+            })
+            .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+            .create().show();
+    }
+
+    public void toSearchActivity(View v) {
+        startActivity(new Intent(this, SearchActivity.class));
     }
 
     @Override
