@@ -16,4 +16,5 @@
     <color name="hotdog">#89bc99</color>
     <color name="drink">#c965cc</color>
     <color name="more">#969dcd</color>
+    <color name="pressed_primary">#BD5C65</color>
 </resources>

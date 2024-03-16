@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,15 +44,19 @@ import retrofit2.Call;
 public class SuggestedFoodDaily extends RecyclerView.Adapter<SuggestedFoodDaily.ViewHolder> {
     List<Food> foods;
     MutableLiveData<Boolean> loadComplete;
-    Activity activity;
+    FragmentContainerView loadingFrag;
     UserApi userApi;
     String uid;
+    Activity activity;
     Context context;
 
     public SuggestedFoodDaily(
         Activity activity,
+        FragmentContainerView loadingFrag,
         MutableLiveData<Boolean> loadComplete,
         List<Food> foods, UserApi userApi, String uid) {
+        this.activity = activity;
+        this.loadingFrag = loadingFrag;
         this.loadComplete = loadComplete;
         this.foods = foods;
         this.userApi = userApi;
@@ -92,24 +98,30 @@ public class SuggestedFoodDaily extends RecyclerView.Adapter<SuggestedFoodDaily.
             intent.putExtra(FOOD_FINISH_TIME, food.getTimeId());
             context.startActivity(intent);
         });
-        holder.addToCartBtn.setOnClickListener(v -> addToCart(food));
+        holder.addToCartBtn.setOnClickListener(v -> {
+            if (Functions.isInternetConnected(context))
+                addToCart(food);
+            else Functions.notifyNoInternetConnection(context);
+        });
     }
 
     private void addToCart(Food food) {
+        loadingFrag.setVisibility(View.VISIBLE);
         new Thread(() -> {
             Call<CartItem> req = userApi.addItemToCart(uid, new CartItem(
-                    food.getDescription(),
-                    food.getPrice(),
-                    food.getStar(),
-                    food.getImagePath(),
-                    food.getTimeId(),
-                    food.getTitle(),
-                    1
-                )
-            );
+                food.getDescription(),
+                food.getPrice(),
+                food.getStar(),
+                food.getImagePath(),
+                food.getTimeId(),
+                food.getTitle(),
+                1));
             try {
                 if (req.execute().isSuccessful()) {
-                    Functions.notifyAddedToCartSuccessful(activity);
+                    Functions.changeAddStateToSuccess(activity, loadingFrag);
+                    SystemClock.sleep(500);
+                    activity.runOnUiThread(() -> loadingFrag.setVisibility(View.GONE));
+                    Functions.changeAddStateToLoading(activity, loadingFrag);
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);

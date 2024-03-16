@@ -12,12 +12,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.fragment.app.FragmentContainerView;
 
 import com.firstapp.foodorderapp.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -34,20 +34,7 @@ public class Functions {
         ConnectivityManager manager =
             (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-        boolean isConnected = networkInfo != null && networkInfo.isConnected();
-        if (!isConnected) {
-            // show no internet connection
-            View view = LayoutInflater.from(context)
-                .inflate(R.layout.view_no_connection, new LinearLayout(context), false);
-            AlertDialog dialog = new MaterialAlertDialogBuilder(context)
-                .setView(view)
-                .create();
-            view.findViewById(R.id.btnClose).setOnClickListener((v) ->
-                dialog.dismiss()
-            );
-            dialog.show();
-        }
-        return isConnected;
+        return networkInfo != null && networkInfo.isConnected();
     }
 
     static public void clearInputFocusWhenClickOutside(MotionEvent ev, Activity activity) {
@@ -79,7 +66,25 @@ public class Functions {
             .edit().putString(UID, null).apply();
     }
 
-    static public void notifyAddedToCartSuccessful(Activity context) {
-        // TODO: notify
+    static public void changeAddStateToSuccess(Activity activity, FragmentContainerView loadingFrag) {
+        activity.runOnUiThread(() -> {
+            loadingFrag.findViewById(R.id.loadingIndicator).setVisibility(View.GONE);
+            loadingFrag.findViewById(R.id.tvSuccessNotification).setVisibility(View.VISIBLE);
+        });
+    }
+
+    static public void changeAddStateToLoading(Activity activity, FragmentContainerView loadingFrag) {
+        activity.runOnUiThread(() -> {
+            loadingFrag.findViewById(R.id.loadingIndicator).setVisibility(View.VISIBLE);
+            loadingFrag.findViewById(R.id.tvSuccessNotification).setVisibility(View.GONE);
+        });
+    }
+
+    static public void notifyNoInternetConnection(Context context) {
+        View view =
+            LayoutInflater.from(context).inflate(R.layout.view_no_connection, null, false);
+        AlertDialog dialog = new MaterialAlertDialogBuilder(context).setView(view).create();
+        view.findViewById(R.id.btnClose).setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
     }
 }

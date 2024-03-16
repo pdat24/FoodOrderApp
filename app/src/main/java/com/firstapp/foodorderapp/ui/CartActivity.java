@@ -45,7 +45,7 @@ public class CartActivity extends AppCompatActivity {
     double totalPriceValue;
     CartItemAdapter cartItemAdapter;
     List<CartItem> currentItemList;
-    DecimalFormat decimalFormat = new DecimalFormat("##.00");
+    DecimalFormat decimalFormat = new DecimalFormat("##.##");
     MutableLiveData<Double> subTotalPriceUpdates = new MutableLiveData<>();
 
     @SuppressLint("SetTextI18n")
@@ -67,8 +67,8 @@ public class CartActivity extends AppCompatActivity {
         // observe total price change
         subTotalPriceUpdates.observe(this, v -> {
             totalPriceValue += v;
-            subTotal.setText("$" + decimalFormat.format(totalPriceValue));
-            totalPriceView.setText("$" + decimalFormat.format(totalPriceValue + deliveryFee));
+            subTotal.setText("$" + decimalFormat.format(totalPriceValue - deliveryFee));
+            totalPriceView.setText("$" + decimalFormat.format(totalPriceValue));
         });
         fetchData();
         attachSwipeToDeleteAction();
@@ -90,13 +90,12 @@ public class CartActivity extends AppCompatActivity {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 new Thread(() -> {
                     try {
-                        String title =
-                            currentItemList.get(viewHolder.getAdapterPosition()).getTitle();
-                        currentItemList.removeIf(i -> i.getTitle().equals(title));
-                        runOnUiThread(() ->
-                            rcvItem.setAdapter(cartItemAdapter)
-                        );
-                        userApi.removeCartItem(uid, title).execute();
+                        CartItem item =
+                            currentItemList.get(viewHolder.getAdapterPosition());
+                        currentItemList.removeIf(i -> i.getTitle().equals(item.getTitle()));
+                        runOnUiThread(() -> rcvItem.setAdapter(cartItemAdapter));
+                        subTotalPriceUpdates.postValue(-item.getPrice() * item.getAmount());
+                        userApi.removeCartItem(uid, item.getTitle()).execute();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -138,12 +137,12 @@ public class CartActivity extends AppCompatActivity {
     private void renderSubtotalPrice(List<CartItem> items) {
         double sum = 0;
         for (CartItem i : items) {
-            sum += i.getPrice();
+            sum += i.getPrice() * i.getAmount();
         }
-        subTotal.setText("$" + sum);
+        subTotal.setText("$" + decimalFormat.format(sum));
         if (sum != 0) {
             totalPriceValue = sum + deliveryFee;
-            totalPriceView.setText("$" + totalPriceValue);
+            totalPriceView.setText("$" + decimalFormat.format(totalPriceValue));
         } else deliveryFeeView.setText("$0.0");
     }
 

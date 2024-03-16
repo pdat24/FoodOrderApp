@@ -1,248 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white_bg"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.MainActivity"
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="12dp"
-        android:paddingBottom="24dp">
+        android:layout_height="match_parent"
+        android:background="@color/white_bg">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp">
+            android:orientation="vertical"
+            android:paddingTop="12dp"
+            android:paddingBottom="24dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcome"
+                    android:textColor="@color/text"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/image_desc"
+                    android:onClick="signOut"
+                    android:src="@drawable/logout"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/bg_icon_btn" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="16dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ipSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/bg_search_input"
+                    android:drawableEnd="@drawable/search_icon"
+                    android:drawablePadding="8dp"
+                    android:gravity="center"
+                    android:hint="@string/search_food"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="@color/text"
+                    android:textColorHint="@color/text"
+                    android:textCursorDrawable="@drawable/view_input_cursor"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btnBasket"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RelativeLayout
+                    android:id="@+id/btnBasket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_basket_btn"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ipSearch"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerInParent="true"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/image_desc"
+                        android:src="@drawable/basket" />
+                </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp">
+
+                <com.firstapp.foodorderapp.view.CustomSpinner
+                    android:id="@+id/timeFilter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    app:iconStart="@drawable/time"
+                    app:layout_constraintEnd_toStartOf="@id/space"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:text="@string/time" />
+
+                <Space
+                    android:id="@+id/space"
+                    android:layout_width="12dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.firstapp.foodorderapp.view.CustomSpinner
+                    android:id="@+id/priceFilter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    app:iconStart="@drawable/dollar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/space"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:text="@string/price" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/welcome"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/today_best_food"
                 android:textColor="@color/text"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:contentDescription="@string/image_desc"
-                android:onClick="signOut"
-                android:src="@drawable/logout"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/bg_icon_btn" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingHorizontal="16dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ipSearch"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="12dp"
-                android:background="@drawable/bg_search_input"
-                android:drawableEnd="@drawable/search_icon"
-                android:drawablePadding="8dp"
-                android:gravity="center"
-                android:hint="@string/search_food"
-                android:paddingHorizontal="16dp"
-                android:textColor="@color/text"
-                android:textColorHint="@color/text"
-                android:textCursorDrawable="@drawable/view_input_cursor"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btnBasket"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <RelativeLayout
-                android:id="@+id/btnBasket"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_basket_btn"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ipSearch"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_centerInParent="true"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/image_desc"
-                    android:src="@drawable/basket" />
-            </RelativeLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp">
-
-            <com.firstapp.foodorderapp.view.CustomSpinner
-                android:id="@+id/timeFilter"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                app:iconStart="@drawable/time"
-                app:layout_constraintEnd_toStartOf="@id/space"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:text="@string/time" />
-
-            <Space
-                android:id="@+id/space"
-                android:layout_width="12dp"
-                android:layout_height="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.firstapp.foodorderapp.view.CustomSpinner
-                android:id="@+id/priceFilter"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                app:iconStart="@drawable/dollar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/space"
-                app:layout_constraintTop_toTopOf="parent"
-                app:text="@string/price" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="12dp"
-            android:text="@string/today_best_food"
-            android:textColor="@color/text"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/best_food_height">
-
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/bestFoodPlaceHolder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:indeterminate="true"
-                app:indicatorColor="@color/light_grey_2" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcvTodayBestFood"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false"
+                android:minHeight="@dimen/best_food_height">
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/bestFoodPlaceHolder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:indeterminate="true"
+                    app:indicatorColor="@color/light_grey_2" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvTodayBestFood"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingStart="16dp"
+                    tools:ignore="RtlSymmetry" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/choose_category"
+                android:textColor="@color/text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingStart="16dp"
-                tools:ignore="RtlSymmetry" />
-        </RelativeLayout>
+                app:alignItems="center"
+                app:flexDirection="row"
+                app:flexWrap="wrap"
+                app:justifyContent="space_evenly">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="12dp"
-            android:text="@string/choose_category"
-            android:textColor="@color/text"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+                <com.firstapp.foodorderapp.view.CategoryItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:category_id="0"
+                    app:label="Pizza"
+                    app:thumbnail="@drawable/btn_1"
+                    app:thumbnail_background="@color/pizza" />
 
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            app:alignItems="center"
-            app:flexDirection="row"
-            app:flexWrap="wrap"
-            app:justifyContent="space_evenly">
+                <com.firstapp.foodorderapp.view.CategoryItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:category_id="1"
+                    app:label="Burger"
+                    app:thumbnail="@drawable/btn_2"
+                    app:thumbnail_background="@color/burger" />
 
-            <com.firstapp.foodorderapp.view.CategoryItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:category_id="0"
-                app:label="Pizza"
-                app:thumbnail="@drawable/btn_1"
-                app:thumbnail_background="@color/pizza" />
+                <com.firstapp.foodorderapp.view.CategoryItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:category_id="2"
+                    app:label="Chicken"
+                    app:thumbnail="@drawable/btn_3"
+                    app:thumbnail_background="@color/chicken" />
 
-            <com.firstapp.foodorderapp.view.CategoryItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:category_id="1"
-                app:label="Burger"
-                app:thumbnail="@drawable/btn_2"
-                app:thumbnail_background="@color/burger" />
+                <com.firstapp.foodorderapp.view.CategoryItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:category_id="3"
+                    app:label="Sushi"
+                    app:thumbnail="@drawable/btn_4"
+                    app:thumbnail_background="@color/sushi" />
 
-            <com.firstapp.foodorderapp.view.CategoryItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:category_id="2"
-                app:label="Chicken"
-                app:thumbnail="@drawable/btn_3"
-                app:thumbnail_background="@color/chicken" />
+                <com.firstapp.foodorderapp.view.CategoryItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:category_id="4"
+                    app:label="Meat"
+                    app:thumbnail="@drawable/btn_5"
+                    app:thumbnail_background="@color/meat" />
 
-            <com.firstapp.foodorderapp.view.CategoryItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:category_id="3"
-                app:label="Sushi"
-                app:thumbnail="@drawable/btn_4"
-                app:thumbnail_background="@color/sushi" />
+                <com.firstapp.foodorderapp.view.CategoryItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:category_id="5"
+                    app:label="Hotdog"
+                    app:thumbnail="@drawable/btn_6"
+                    app:thumbnail_background="@color/hotdog" />
 
-            <com.firstapp.foodorderapp.view.CategoryItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:category_id="4"
-                app:label="Meat"
-                app:thumbnail="@drawable/btn_5"
-                app:thumbnail_background="@color/meat" />
+                <com.firstapp.foodorderapp.view.CategoryItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:category_id="6"
+                    app:label="Drink"
+                    app:thumbnail="@drawable/btn_7"
+                    app:thumbnail_background="@color/drink" />
 
-            <com.firstapp.foodorderapp.view.CategoryItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:category_id="5"
-                app:label="Hotdog"
-                app:thumbnail="@drawable/btn_6"
-                app:thumbnail_background="@color/hotdog" />
+                <com.firstapp.foodorderapp.view.CategoryItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:category_id="7"
+                    app:label="Other"
+                    app:thumbnail="@drawable/btn_8"
+                    app:thumbnail_background="@color/more" />
+            </com.google.android.flexbox.FlexboxLayout>
+        </LinearLayout>
+    </ScrollView>
 
-            <com.firstapp.foodorderapp.view.CategoryItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:category_id="6"
-                app:label="Drink"
-                app:thumbnail="@drawable/btn_7"
-                app:thumbnail_background="@color/drink" />
-
-            <com.firstapp.foodorderapp.view.CategoryItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:category_id="7"
-                app:label="Other"
-                app:thumbnail="@drawable/btn_8"
-                app:thumbnail_background="@color/more" />
-        </com.google.android.flexbox.FlexboxLayout>
-    </LinearLayout>
-</ScrollView>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragLoading"
+        android:name="com.firstapp.foodorderapp.ui.fragments.AddedToCartNotificationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="gone" />
+</FrameLayout>

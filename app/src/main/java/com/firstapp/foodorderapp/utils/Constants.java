@@ -13,7 +13,6 @@ public class Constants {
     }
 
     static final public String ACTION_LOGIN = "ACTION_LOGIN";
-    static final public String ACTION_SIGNUP = "ACTION_SIGNUP";
     static final public String API_BASE_URL = "http://192.168.0.108:8080/api/v1/";
     static final public int OK_CODE = 200;
     static final public int CONFLICT_CODE = 409;

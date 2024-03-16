@@ -10,6 +10,7 @@ import static com.firstapp.foodorderapp.utils.Constants.FOOD_VOTE;
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentContainerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -26,7 +28,6 @@ import com.firstapp.foodorderapp.api.UserApi;
 import com.firstapp.foodorderapp.model.CartItem;
 import com.firstapp.foodorderapp.utils.Constants;
 import com.firstapp.foodorderapp.utils.Functions;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
 
@@ -55,6 +56,7 @@ public class DetailActivity extends AppCompatActivity {
     double star;
     String title;
     String description;
+    FragmentContainerView loadingFrag;
     int timeId;
 
 
@@ -73,6 +75,7 @@ public class DetailActivity extends AppCompatActivity {
         totalPrice = findViewById(R.id.tvTotalPrice);
         time = findViewById(R.id.tvTime);
         details = findViewById(R.id.tvDetail);
+        loadingFrag = findViewById(R.id.fragLoading);
 
         Bundle extras = getIntent().getExtras();
         assert extras != null;
@@ -80,6 +83,7 @@ public class DetailActivity extends AppCompatActivity {
         title = extras.getString(FOOD_NAME);
         star = extras.getDouble(FOOD_VOTE);
         timeId = extras.getInt(FOOD_FINISH_TIME);
+        imagePath = extras.getString(FOOD_THUMBNAIL);
         description = extras.getString(FOOD_DETAIL);
         name.setText(title);
         details.setText(description);
@@ -87,7 +91,7 @@ public class DetailActivity extends AppCompatActivity {
         priceView.setText("$" + price);
         time.setText(Constants.timeTable.get(timeId));
         Glide.with(thumbnail).asDrawable()
-            .load(extras.getString(FOOD_THUMBNAIL)).into(new SimpleTarget<Drawable>() {
+            .load(imagePath).into(new SimpleTarget<Drawable>() {
                 @Override
                 public void onResourceReady(
                     @NonNull Drawable resource,
@@ -99,19 +103,24 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void addToCart(View view) {
-        new Thread(() -> {
-            Call<CartItem> req = userApi.addItemToCart(
-                uid, new CartItem(
-                    description, price, star, imagePath, timeId, title, quality
-                )
-            );
-            try {
-                if (req.execute().isSuccessful())
-                    Functions.notifyAddedToCartSuccessful(DetailActivity.this);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+        if (Functions.isInternetConnected(this)) {
+            loadingFrag.setVisibility(View.VISIBLE);
+            new Thread(() -> {
+                Call<CartItem> req = userApi.addItemToCart(
+                    uid, new CartItem(
+                        description, price, star, imagePath, timeId, title, quality));
+                try {
+                    if (req.execute().isSuccessful()) {
+                        Functions.changeAddStateToSuccess(DetailActivity.this, loadingFrag);
+                        SystemClock.sleep(500);
+                        runOnUiThread(() -> loadingFrag.setVisibility(View.GONE));
+                        Functions.changeAddStateToLoading(DetailActivity.this, loadingFrag);
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+        } else Functions.notifyNoInternetConnection(this);
     }
 
     @SuppressLint("SetTextI18n")

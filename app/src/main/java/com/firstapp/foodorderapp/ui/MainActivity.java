@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +32,7 @@ import retrofit2.Response;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
+    FragmentContainerView loadingFrag;
     RecyclerView rcvBestFood;
     View basketButton;
     TextInputEditText searchInput;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         // get views
         basketButton = findViewById(R.id.btnBasket);
+        loadingFrag = findViewById(R.id.fragLoading);
         searchInput = findViewById(R.id.ipSearch);
         rcvBestFood = findViewById(R.id.rcvTodayBestFood);
         bestFoodPlaceholder = findViewById(R.id.bestFoodPlaceHolder);
@@ -84,9 +87,8 @@ public class MainActivity extends AppCompatActivity {
                 Response<List<Food>> res = req.execute();
                 if (res.isSuccessful()) {
                     runOnUiThread(() -> rcvBestFood.setAdapter(new SuggestedFoodDaily(
-                        MainActivity.this,
-                        bestFoodIsLoaded, res.body(), userApi, uid
-                    )));
+                        MainActivity.this, loadingFrag,
+                        bestFoodIsLoaded, res.body(), userApi, uid)));
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);

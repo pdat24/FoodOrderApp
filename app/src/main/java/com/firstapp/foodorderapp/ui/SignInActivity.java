@@ -3,7 +3,6 @@ package com.firstapp.foodorderapp.ui;
 import static com.firstapp.foodorderapp.utils.Constants.CONFLICT_CODE;
 import static com.firstapp.foodorderapp.utils.Constants.MAIN_SHARED_PREFERENCE;
 import static com.firstapp.foodorderapp.utils.Constants.OK_CODE;
-import static com.firstapp.foodorderapp.utils.Constants.UID;
 import static com.firstapp.foodorderapp.utils.Constants.UNAUTHORIZED_CODE;
 
 import android.annotation.SuppressLint;
@@ -87,14 +86,13 @@ public class SignInActivity extends AppCompatActivity {
 
         // add event listeners
         submitButton.setOnClickListener((v) -> {
-            warning.setVisibility(View.GONE);
-            String email = String.valueOf(emailInput.getText());
-            String password = String.valueOf(passwordInput.getText());
-            if (
-                Functions.isInternetConnected(this) &&
-                    isCredentialsValid(email, password)
-            )
-                signInWithEmailAndPassword(email, password);
+            if (Functions.isInternetConnected(this)) {
+                warning.setVisibility(View.GONE);
+                String email = String.valueOf(emailInput.getText());
+                String password = String.valueOf(passwordInput.getText());
+                if (isCredentialsValid(email, password))
+                    signInWithEmailAndPassword(email, password);
+            } else Functions.notifyNoInternetConnection(SignInActivity.this);
         });
         googleSignInLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -103,6 +101,7 @@ public class SignInActivity extends AppCompatActivity {
         googleSignInButton.setOnClickListener((v) -> {
                 if (Functions.isInternetConnected(this))
                     requestGoogleSignIn();
+                else Functions.notifyNoInternetConnection(SignInActivity.this);
             }
         );
     }
@@ -222,15 +221,11 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void showLoading() {
-        runOnUiThread(() -> {
-            loading.setVisibility(View.VISIBLE);
-        });
+        runOnUiThread(() -> loading.setVisibility(View.VISIBLE));
     }
 
     private void hideLoading() {
-        runOnUiThread(() -> {
-            loading.setVisibility(View.GONE);
-        });
+        runOnUiThread(() -> loading.setVisibility(View.GONE));
     }
 
     private void handleSignInWithGoogle(ActivityResult activityResult) {

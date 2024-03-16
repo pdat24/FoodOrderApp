@@ -27,21 +27,19 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
         getWindow().setStatusBarColor(getColor(R.color.intro_status_bar));
         Functions.setStatusBarTextToDark(this);
-        if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(this, MainActivity.class));
+        if (Functions.isInternetConnected(this)) {
+            if (firebaseAuth.getCurrentUser() != null) {
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            }
+        } else {
+            startActivity(new Intent(this, SignInActivity.class));
             finish();
-        }
+        };
     }
 
     public void toSignUp(View view) {
         Intent intent = new Intent(this, SignInActivity.class);
-        intent.setAction(Constants.ACTION_SIGNUP);
-        startActivity(intent);
-    }
-
-    public void tpLogin(View view) {
-        Intent intent = new Intent(this, SignInActivity.class);
-        intent.setAction(Constants.ACTION_LOGIN);
         startActivity(intent);
     }
 }
