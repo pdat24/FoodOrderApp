@@ -79,7 +79,7 @@ public class SuggestedFoodDaily extends RecyclerView.Adapter<SuggestedFoodDaily.
         holder.name.setText(food.getTitle());
         holder.price.setText(food.getPrice() + "$");
         holder.voteRate.setText(String.valueOf(food.getStar()));
-        holder.time.setText(Constants.timeTable.get(food.getTimeId()));
+        holder.time.setText(Constants.timeRangeTable.get(food.getTimeId()));
         Glide.with(context).asDrawable().load(food.getImagePath()).into(new SimpleTarget<Drawable>() {
             @Override
             public void onResourceReady(

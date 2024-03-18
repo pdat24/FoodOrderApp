@@ -155,21 +155,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/image_desc"
-                    android:src="@drawable/facebook" />
+                    android:onClick="googleSignInEventHandler"
+                    android:src="@drawable/google" />
 
                 <ImageView
-                    android:id="@+id/btnGoogleSignIn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:contentDescription="@string/image_desc"
+                    android:onClick="googleSignInEventHandler"
                     android:src="@drawable/google" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/image_desc"
-                    android:src="@drawable/twitter" />
+                    android:onClick="googleSignInEventHandler"
+                    android:src="@drawable/google" />
             </LinearLayout>
 
             <LinearLayout

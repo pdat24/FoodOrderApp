@@ -57,7 +57,6 @@ public class SignInActivity extends AppCompatActivity {
     TextInputEditText emailInput;
     TextInputEditText passwordInput;
     TextView warning;
-    ImageView googleSignInButton;
     InputMethodManager inputMethodManager;
     SharedPreferences sharedPreferences;
     View loading;
@@ -81,7 +80,6 @@ public class SignInActivity extends AppCompatActivity {
         emailInput = findViewById(R.id.ipEmail);
         passwordInput = findViewById(R.id.ipPassword);
         submitButton = findViewById(R.id.btnSubmit);
-        googleSignInButton = findViewById(R.id.btnGoogleSignIn);
         warning = findViewById(R.id.tvWarning);
 
         // add event listeners
@@ -98,12 +96,12 @@ public class SignInActivity extends AppCompatActivity {
             new ActivityResultContracts.StartActivityForResult(),
             this::handleSignInWithGoogle
         );
-        googleSignInButton.setOnClickListener((v) -> {
-                if (Functions.isInternetConnected(this))
-                    requestGoogleSignIn();
-                else Functions.notifyNoInternetConnection(SignInActivity.this);
-            }
-        );
+    }
+
+    public void googleSignInEventHandler(View v) {
+        if (Functions.isInternetConnected(this))
+            requestGoogleSignIn();
+        else Functions.notifyNoInternetConnection(SignInActivity.this);
     }
 
     private void requestGoogleSignIn() {

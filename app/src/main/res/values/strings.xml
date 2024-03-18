@@ -36,7 +36,7 @@
     <string name="added_to_cart">Added to cart</string>
     <string name="no_result">No result is found</string>
     <string name="sign_out">Sign Out</string>
-    <string name="confirm_sign_out_prompt">Are you sure you want to sign out?</string>
+    <string name="confirm_sign_out_prompt">Are you sure want to sign out?</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
 </resources>

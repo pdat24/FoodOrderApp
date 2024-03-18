@@ -89,7 +89,7 @@ public class DetailActivity extends AppCompatActivity {
         details.setText(description);
         voteRate.setText(star + " Rating");
         priceView.setText("$" + price);
-        time.setText(Constants.timeTable.get(timeId));
+        time.setText(Constants.timeRangeTable.get(timeId));
         Glide.with(thumbnail).asDrawable()
             .load(imagePath).into(new SimpleTarget<Drawable>() {
                 @Override
