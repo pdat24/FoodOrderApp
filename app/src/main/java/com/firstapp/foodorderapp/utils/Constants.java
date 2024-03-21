@@ -19,7 +19,7 @@ public class Constants {
         priceRangeTable.put(2, "more than 30$");
     }
 
-    static final public String API_BASE_URL = "http://192.168.0.108:8080/api/v1/";
+    static final public String API_BASE_URL = "https://foodorderapp-iwq3.onrender.com/api/v1/";
     static final public int OK_CODE = 200;
     static final public int CONFLICT_CODE = 409;
     static final public int UNAUTHORIZED_CODE = 401;
